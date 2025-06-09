@@ -17,6 +17,11 @@
             <div id="gameInstruction" class="game-instruction"></div>
         </div>
 
+        <div class="timers">
+            <div id="playerXTimer" class="timer">Player X: <span id="playerXTime">500</span>s</div>
+            <div id="playerOTimer" class="timer">Player O: <span id="playerOTime">500</span>s</div>
+        </div>
+
         <div id="superBoard" class="super-board"></div>
 
         <button id="resetButton" class="reset-button" onclick="resetGame()">New Game</button>
@@ -31,8 +36,35 @@
                 <li>Green highlight shows where you can currently play</li>
             </ul>
         </div>
+
+        
     </div>
 
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyB_rhlvpYmCEOFznXVVvoRRuIK2IqARF1s",
+          authDomain: "super-tic-tac-toe-1d3ad.firebaseapp.com",
+          databaseURL: "https://super-tic-tac-toe-1d3ad-default-rtdb.firebaseio.com",
+          projectId: "super-tic-tac-toe-1d3ad",
+          storageBucket: "super-tic-tac-toe-1d3ad.firebasestorage.app",
+          messagingSenderId: "983831058341",
+          appId: "1:983831058341:web:d2e16c8de49a3202adfa4c",
+          measurementId: "G-YLFYSTJY3Z"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+    </script>
     
 </body>
 </html>
+

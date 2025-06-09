@@ -1,4 +1,3 @@
-
 class SuperTicTacToe {
     constructor() {
         this.boards = Array(9).fill(null).map(() => Array(9).fill(''));
@@ -7,6 +6,9 @@ class SuperTicTacToe {
         this.wonBoards = Array(9).fill('');
         this.gameWinner = '';
         this.gameOver = false;
+        this.playerXTime = 300; // 5 minutes
+        this.playerOTime = 300; // 5 minutes
+        this.timerInterval = null;
         this.initializeGame();
     }
 
@@ -33,6 +35,32 @@ class SuperTicTacToe {
 
     isBoardFull(board) {
         return board.every(cell => cell !== '');
+    }
+
+    startTimer() {
+        clearInterval(this.timerInterval);
+        this.timerInterval = setInterval(() => {
+            if (this.currentPlayer === 'X') {
+                this.playerXTime--;
+                document.getElementById('playerXTime').textContent = this.playerXTime;
+                if (this.playerXTime <= 0) {
+                    this.endGame('O');
+                }
+            } else {
+                this.playerOTime--;
+                document.getElementById('playerOTime').textContent = this.playerOTime;
+                if (this.playerOTime <= 0) {
+                    this.endGame('X');
+                }
+            }
+        }, 1000);
+    }
+
+    endGame(winner) {
+        this.gameWinner = winner;
+        this.gameOver = true;
+        clearInterval(this.timerInterval);
+        this.updateStatus();
     }
 
     handleCellClick(boardIndex, cellIndex) {
@@ -77,6 +105,7 @@ class SuperTicTacToe {
 
         this.renderBoard();
         this.updateStatus();
+        this.startTimer();
     }
 
     renderBoard() {
@@ -163,6 +192,11 @@ class SuperTicTacToe {
         this.wonBoards = Array(9).fill('');
         this.gameWinner = '';
         this.gameOver = false;
+        this.playerXTime = 300;
+        this.playerOTime = 300;
+        document.getElementById('playerXTime').textContent = this.playerXTime;
+        document.getElementById('playerOTime').textContent = this.playerOTime;
+        clearInterval(this.timerInterval);
         this.renderBoard();
         this.updateStatus();
     }
