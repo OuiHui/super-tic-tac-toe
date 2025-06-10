@@ -6,8 +6,8 @@ class SuperTicTacToe {
         this.wonBoards = Array(9).fill('');
         this.gameWinner = '';
         this.gameOver = false;
-        this.playerXTime = 300; // 5 minutes
-        this.playerOTime = 300; // 5 minutes
+        this.playerXTime = 500; // 5 minutes
+        this.playerOTime = 500; // 5 minutes
         this.timerInterval = null;
         this.initializeGame();
     }
@@ -192,8 +192,8 @@ class SuperTicTacToe {
         this.wonBoards = Array(9).fill('');
         this.gameWinner = '';
         this.gameOver = false;
-        this.playerXTime = 300;
-        this.playerOTime = 300;
+        this.playerXTime = 500;
+        this.playerOTime = 500;
         document.getElementById('playerXTime').textContent = this.playerXTime;
         document.getElementById('playerOTime').textContent = this.playerOTime;
         clearInterval(this.timerInterval);
