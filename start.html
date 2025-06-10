@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Start Game | Super Tic-Tac-Toe</title>
+</head>
+<body>
+    <div class="game-container" style="max-width:400px; margin-top:40px;">
+        <h1>Start a Game</h1>
+        <div style="display:flex; flex-direction:column; gap:24px; align-items:center;">
+            <button id="localBtn" class="reset-button" style="width:100%;">Local Single Player</button>
+            <div style="width:100%; text-align:center; color:#888;">or</div>
+            <button id="onlineBtn" class="reset-button" style="width:100%;">Online Multiplayer</button>
+        </div>
+        <div id="onlineOptions" style="display:none; margin-top:2em;">
+            <button id="createGameBtn" class="reset-button" style="width:100%;">Create Online Game</button>
+            <div style="margin:0.5em 0; text-align:center; color:#888;">or</div>
+            <input id="joinCodeInput" type="text" placeholder="Enter Game Code" maxlength="8" style="width:100%; padding:10px; font-size:1em; border-radius:8px; border:1px solid #ccc; margin-bottom:8px;" />
+            <button id="joinGameBtn" class="reset-button" style="width:100%;">Join Game</button>
+            <div id="joinError" style="color:red; font-size:0.95em; margin-top:0.5em;"></div>
+            <div id="createdGameCode" style="margin-top:1em; font-weight:bold; text-align:center;"></div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('localBtn').onclick = function() {
+            window.location.href = 'index.html?mode=local';
+        };
+        document.getElementById('onlineBtn').onclick = function() {
+            document.getElementById('onlineOptions').style.display = '';
+        };
+        document.getElementById('createGameBtn').onclick = async function() {
+            // This is a placeholder. You should implement Firebase logic here as in your main app.js
+            const code = Math.random().toString(36).substring(2, 8).toUpperCase();
+            document.getElementById('createdGameCode').textContent = 'Game Code: ' + code + ' (share with your friend)';
+            // Optionally, redirect to main game page with code
+            // window.location.href = 'index.html?mode=online&code=' + code;
+        };
+        document.getElementById('joinGameBtn').onclick = function() {
+            const code = document.getElementById('joinCodeInput').value.trim().toUpperCase();
+            if (!code) {
+                document.getElementById('joinError').textContent = 'Please enter a code.';
+                return;
+            }
+            // Optionally, redirect to main game page with code
+            window.location.href = 'index.html?mode=online&code=' + code;
+        };
+    </script>
+</body>
+</html>
