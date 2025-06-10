@@ -39,35 +39,46 @@ class SuperTicTacToe {
 
     startTimer() {
         clearInterval(this.timerInterval);
-        // Set timer color based on current player
         const playerXTimer = document.getElementById('playerXTimer');
         const playerOTimer = document.getElementById('playerOTimer');
         if (this.currentPlayer === 'X') {
-            playerXTimer.style.color = '#2196F3'; // blue
-            playerOTimer.style.color = '#333'; // default
+            playerXTimer.style.color = '#2196F3';
+            playerOTimer.style.color = '#333';
         } else {
-            playerXTimer.style.color = '#333'; // default
-            playerOTimer.style.color = '#f44336'; // red
+            playerXTimer.style.color = '#333';
+            playerOTimer.style.color = '#f44336';
         }
-        this.timerInterval = setInterval(() => {
-            if (this.currentPlayer === 'X') {
-                this.playerXTime--;
-                document.getElementById('playerXTime').textContent = this.playerXTime;
-                playerXTimer.style.color = '#2196F3';
-                playerOTimer.style.color = '#333';
-                if (this.playerXTime <= 0) {
-                    this.endGame('O');
+        // Multiplayer: do not use local interval, just update display
+        if (isOnlineMultiplayer) {
+            this.updateTimerDisplay();
+        } else {
+            // Local: use interval as before
+            this.timerInterval = setInterval(() => {
+                if (this.currentPlayer === 'X') {
+                    this.playerXTime--;
+                    document.getElementById('playerXTime').textContent = this.playerXTime;
+                    playerXTimer.style.color = '#2196F3';
+                    playerOTimer.style.color = '#333';
+                    if (this.playerXTime <= 0) {
+                        this.endGame('O');
+                    }
+                } else {
+                    this.playerOTime--;
+                    document.getElementById('playerOTime').textContent = this.playerOTime;
+                    playerXTimer.style.color = '#333';
+                    playerOTimer.style.color = '#f44336';
+                    if (this.playerOTime <= 0) {
+                        this.endGame('X');
+                    }
                 }
-            } else {
-                this.playerOTime--;
-                document.getElementById('playerOTime').textContent = this.playerOTime;
-                playerXTimer.style.color = '#333';
-                playerOTimer.style.color = '#f44336';
-                if (this.playerOTime <= 0) {
-                    this.endGame('X');
-                }
-            }
-        }, 1000);
+            }, 1000);
+        }
+    }
+
+    updateTimerDisplay() {
+        // For multiplayer: just show the timer from the database
+        document.getElementById('playerXTime').textContent = this.playerXTime;
+        document.getElementById('playerOTime').textContent = this.playerOTime;
     }
 
     endGame(winner) {
@@ -249,6 +260,116 @@ function showStartMenu() {
 function showGameContainer() {
     document.getElementById('gameContainer').style.display = '';
     document.getElementById('startMenu').style.display = 'none';
+}
+
+// --- Multiplayer Firebase Sync ---
+let firebaseUnsubscribe = null;
+let multiplayerCode = null;
+let isOnlineMultiplayer = false;
+let myPlayer = null;
+
+function syncGameToFirebase(players) {
+    if (!isOnlineMultiplayer || !window.firebaseSet || !multiplayerCode) return;
+    window.firebaseSet(window.firebaseRef(window.firebaseDatabase, 'games/' + multiplayerCode + '/state'), {
+        boards: game.boards,
+        currentPlayer: game.currentPlayer,
+        activeBoard: game.activeBoard,
+        wonBoards: game.wonBoards,
+        gameWinner: game.gameWinner,
+        gameOver: game.gameOver
+    });
+    if (players) {
+        window.firebaseSet(window.firebaseRef(window.firebaseDatabase, 'games/' + multiplayerCode + '/players'), players);
+    }
+}
+
+function applyFirebaseState(state) {
+    if (!state) return;
+    const prevPlayer = game.currentPlayer;
+    game.boards = state.boards;
+    game.currentPlayer = state.currentPlayer;
+    game.activeBoard = state.activeBoard;
+    game.wonBoards = state.wonBoards;
+    game.gameWinner = state.gameWinner;
+    game.gameOver = state.gameOver;
+    if (typeof state.playerXTime === 'number') game.playerXTime = state.playerXTime;
+    if (typeof state.playerOTime === 'number') game.playerOTime = state.playerOTime;
+    game.updateTimerDisplay();
+    game.renderBoard();
+    game.updateStatus();
+}
+
+function updatePlayersView(players) {
+    // Optionally, show player info in the UI
+    // Example: document.getElementById('playerInfo').textContent = `X: ${players?.X || '-'} | O: ${players?.O || '-'}`;
+}
+
+function setupFirebaseMultiplayer(code) {
+    isOnlineMultiplayer = true;
+    multiplayerCode = code;
+    showGameContainer();
+    initGame();
+    // Assign player if not already
+    myPlayer = localStorage.getItem('super-ttt-player-' + code);
+    window.firebaseGet(window.firebaseRef(window.firebaseDatabase, 'games/' + code + '/players')).then(snap => {
+        let players = snap.exists() ? snap.val() : {};
+        if (!myPlayer) {
+            if (!players.X) {
+                myPlayer = 'X';
+                players.X = 'Player X';
+            } else if (!players.O) {
+                myPlayer = 'O';
+                players.O = 'Player O';
+            } else {
+                myPlayer = 'spectator';
+            }
+            localStorage.setItem('super-ttt-player-' + code, myPlayer);
+            syncGameToFirebase(players);
+        }
+        updatePlayersView(players);
+    });
+    // Listen for changes
+    if (firebaseUnsubscribe) firebaseUnsubscribe();
+    const dbRef = window.firebaseRef(window.firebaseDatabase, 'games/' + code);
+    firebaseUnsubscribe = window.firebaseOnValue(dbRef, (snapshot) => {
+        const data = snapshot.val();
+        if (data && data.state) applyFirebaseState(data.state);
+        if (data && data.players) updatePlayersView(data.players);
+    });
+    // Patch handleCellClick to sync, only allow move if it's your turn
+    const origHandle = game.handleCellClick.bind(game);
+    game.handleCellClick = function(boardIndex, cellIndex) {
+        if (game.currentPlayer !== myPlayer) return; // Not your turn
+        // Calculate elapsed time for the player who just moved
+        let newState = {
+            boards: game.boards,
+            currentPlayer: game.currentPlayer,
+            activeBoard: game.activeBoard,
+            wonBoards: game.wonBoards,
+            gameWinner: game.gameWinner,
+            gameOver: game.gameOver,
+            playerXTime: game.playerXTime,
+            playerOTime: game.playerOTime
+        };
+        if (game.currentPlayer === 'O') {
+            // X just moved
+            const now = Date.now();
+            let elapsed = Math.floor((now - (game.turnStartTime || now)) / 1000);
+            newState.playerXTime = Math.max(0, game.playerXTime - elapsed);
+            newState.playerOTime = game.playerOTime;
+            game.turnStartTime = now;
+        } else {
+            // O just moved
+            const now = Date.now();
+            let elapsed = Math.floor((now - (game.turnStartTime || now)) / 1000);
+            newState.playerOTime = Math.max(0, game.playerOTime - elapsed);
+            newState.playerXTime = game.playerXTime;
+            game.turnStartTime = now;
+        }
+        origHandle(boardIndex, cellIndex);
+        // Write new state with updated timers
+        window.firebaseSet(window.firebaseRef(window.firebaseDatabase, 'games/' + multiplayerCode + '/state'), newState);
+    };
 }
 
 // Initialize the game when the page loads
