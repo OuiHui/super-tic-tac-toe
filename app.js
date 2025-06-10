@@ -6,8 +6,8 @@ class SuperTicTacToe {
         this.wonBoards = Array(9).fill('');
         this.gameWinner = '';
         this.gameOver = false;
-        this.playerXTime = 500; // 5 minutes
-        this.playerOTime = 500; // 5 minutes
+        this.playerXTime = 500;
+        this.playerOTime = 500;
         this.timerInterval = null;
         this.initializeGame();
     }
@@ -39,16 +39,30 @@ class SuperTicTacToe {
 
     startTimer() {
         clearInterval(this.timerInterval);
+        // Set timer color based on current player
+        const playerXTimer = document.getElementById('playerXTimer');
+        const playerOTimer = document.getElementById('playerOTimer');
+        if (this.currentPlayer === 'X') {
+            playerXTimer.style.color = '#2196F3'; // blue
+            playerOTimer.style.color = '#333'; // default
+        } else {
+            playerXTimer.style.color = '#333'; // default
+            playerOTimer.style.color = '#f44336'; // red
+        }
         this.timerInterval = setInterval(() => {
             if (this.currentPlayer === 'X') {
                 this.playerXTime--;
                 document.getElementById('playerXTime').textContent = this.playerXTime;
+                playerXTimer.style.color = '#2196F3';
+                playerOTimer.style.color = '#333';
                 if (this.playerXTime <= 0) {
                     this.endGame('O');
                 }
             } else {
                 this.playerOTime--;
                 document.getElementById('playerOTime').textContent = this.playerOTime;
+                playerXTimer.style.color = '#333';
+                playerOTimer.style.color = '#f44336';
                 if (this.playerOTime <= 0) {
                     this.endGame('X');
                 }
@@ -206,11 +220,46 @@ let game;
 
 function initGame() {
     game = new SuperTicTacToe();
+    // Highlight Player X timer at game start
+    const playerXTimer = document.getElementById('playerXTimer');
+    const playerOTimer = document.getElementById('playerOTimer');
+    if (playerXTimer && playerOTimer) {
+        playerXTimer.style.color = '#2196F3';
+        playerOTimer.style.color = '#333';
+    }
 }
 
 function resetGame() {
     game.reset();
+    // Highlight Player X timer at game reset
+    const playerXTimer = document.getElementById('playerXTimer');
+    const playerOTimer = document.getElementById('playerOTimer');
+    if (playerXTimer && playerOTimer) {
+        playerXTimer.style.color = '#2196F3';
+        playerOTimer.style.color = '#333';
+    }
+}
+
+function showStartMenu() {
+    // Hide the game container and show the start menu
+    document.getElementById('gameContainer').style.display = 'none';
+    document.getElementById('startMenu').style.display = '';
+}
+
+function showGameContainer() {
+    document.getElementById('gameContainer').style.display = '';
+    document.getElementById('startMenu').style.display = 'none';
 }
 
 // Initialize the game when the page loads
-window.onload = initGame;
+window.onload = function() {
+    initGame();
+
+    // Add back button event listener if it exists
+    const backBtn = document.getElementById('backToLobbyBtn');
+    if (backBtn) {
+        backBtn.onclick = function() {
+            window.location.href = 'start.html';
+        };
+    }
+};

@@ -9,7 +9,21 @@
     
 </head>
 <body>
-    <div class="game-container">
+    <div id="startMenu" class="start-menu" style="display:none;">
+        <h2>Welcome to Super Tic-Tac-Toe!</h2>
+        <button id="localBtn">Local Single Player</button>
+        <button id="onlineBtn">Online Multiplayer</button>
+        <div id="onlineOptions" style="display:none; margin-top:1em;">
+            <button id="createGameBtn">Create Game</button>
+            <div style="margin:0.5em 0;">or</div>
+            <input id="joinCodeInput" type="text" placeholder="Enter Game Code" maxlength="8" />
+            <button id="joinGameBtn">Join Game</button>
+            <div id="joinError" style="color:red; font-size:0.9em;"></div>
+            <div id="createdGameCode" style="margin-top:1em; font-weight:bold;"></div>
+        </div>
+    </div>
+
+    <div class="game-container" id="gameContainer">
         <h1>Super Tic-Tac-Toe</h1>
         
         <div class="game-status">
@@ -25,6 +39,7 @@
         <div id="superBoard" class="super-board"></div>
 
         <button id="resetButton" class="reset-button" onclick="resetGame()">New Game</button>
+        <button id="backToLobbyBtn" class="reset-button" style="margin-bottom: 1em;">Back to Lobby</button>
 
         <div class="rules">
             <h3>How to Play:</h3>
