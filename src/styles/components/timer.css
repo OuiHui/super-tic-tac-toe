@@ -107,7 +107,7 @@
 }
 
 .timer.active {
-  animation: activePulse 2s ease-in-out infinite;
+  animation: activePulse 1s ease-in-out infinite;
   border-width: 3px;
   transform: scale(1.05);
 }
@@ -125,7 +125,7 @@
 .timer.active.player-x .timer-label {
   color: #ff6080;
   text-shadow: 0 0 12px rgba(255, 50, 80, 0.9);
-  animation: textGlow 1.5s ease-in-out infinite alternate;
+  animation: textGlow 1s ease-in-out infinite alternate;
 }
 
 .timer.active.player-x .timer-value {
@@ -147,7 +147,7 @@
 .timer.active.player-o .timer-label {
   color: #40d8ff;
   text-shadow: 0 0 12px rgba(0, 200, 255, 0.9);
-  animation: textGlow 1.5s ease-in-out infinite alternate;
+  animation: textGlow 1s ease-in-out infinite alternate;
 }
 
 .timer.active.player-o .timer-value {
