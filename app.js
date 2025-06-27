@@ -38,41 +38,24 @@ class SuperTicTacToe {
     }
 
     startTimer() {
-        clearInterval(this.timerInterval);
-        const playerXTimer = document.getElementById('playerXTimer');
-        const playerOTimer = document.getElementById('playerOTimer');
-        if (this.currentPlayer === 'X') {
-            playerXTimer.style.color = '#2196F3';
-            playerOTimer.style.color = '#333';
-        } else {
-            playerXTimer.style.color = '#333';
-            playerOTimer.style.color = '#f44336';
-        }
-        // Multiplayer: do not use local interval, just update display
-        if (isOnlineMultiplayer) {
+        if (this.timerInterval) clearInterval(this.timerInterval);
+        this.timerInterval = setInterval(() => {
+            if (this.gameOver) {
+                clearInterval(this.timerInterval);
+                this.timerInterval = null;
+                return;
+            }
+            if (this.currentPlayer === 'X') {
+                this.playerXTime--;
+            } else {
+                this.playerOTime--;
+            }
             this.updateTimerDisplay();
-        } else {
-            // Local: use interval as before
-            this.timerInterval = setInterval(() => {
-                if (this.currentPlayer === 'X') {
-                    this.playerXTime--;
-                    document.getElementById('playerXTime').textContent = this.playerXTime;
-                    playerXTimer.style.color = '#2196F3';
-                    playerOTimer.style.color = '#333';
-                    if (this.playerXTime <= 0) {
-                        this.endGame('O');
-                    }
-                } else {
-                    this.playerOTime--;
-                    document.getElementById('playerOTime').textContent = this.playerOTime;
-                    playerXTimer.style.color = '#333';
-                    playerOTimer.style.color = '#f44336';
-                    if (this.playerOTime <= 0) {
-                        this.endGame('X');
-                    }
-                }
-            }, 1000);
-        }
+            if (isOnlineMultiplayer) syncGameToFirebase();
+            if (this.playerXTime <= 0 || this.playerOTime <= 0) {
+                this.endGame(this.currentPlayer === 'X' ? 'O' : 'X');
+            }
+        }, 1000);
     }
 
     updateTimerDisplay() {
@@ -82,10 +65,14 @@ class SuperTicTacToe {
     }
 
     endGame(winner) {
-        this.gameWinner = winner;
         this.gameOver = true;
-        clearInterval(this.timerInterval);
+        this.gameWinner = winner;
+        if (this.timerInterval) {
+            clearInterval(this.timerInterval);
+            this.timerInterval = null;
+        }
         this.updateStatus();
+        this.updateTimerDisplay();
     }
 
     handleCellClick(boardIndex, cellIndex) {

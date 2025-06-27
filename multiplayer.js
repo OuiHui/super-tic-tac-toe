@@ -183,10 +183,155 @@ function listenToGameState(code) {
 }
 
 function updateGameUI(state) {
-    // TODO: Render the board, timers, and handle moves
-    // Only allow move if myPlayer === state.currentPlayer
-    // Update UI to show current player, timers, and winner
+    const gameArea = document.getElementById('gameArea');
+    gameArea.innerHTML = ''; // Clear previous board
+
+    // Render timers and status
+    const statusDiv = document.createElement('div');
+    statusDiv.innerHTML = `
+        <div class="game-status">
+            <div class="current-player">Current Player: <span class="${state.currentPlayer.toLowerCase()}" style="color: ${state.currentPlayer === 'X' ? '#2196F3' : '#f44336'};">${state.currentPlayer}</span></div>
+            <div class="timers">
+                <div class="timer">Player X: <span>${state.playerXTime ?? 500}</span>s</div>
+                <div class="timer">Player O: <span>${state.playerOTime ?? 500}</span>s</div>
+            </div>
+        </div>
+    `;
+    gameArea.appendChild(statusDiv);
+
+    // Render the super board
+    const superBoard = document.createElement('div');
+    superBoard.className = 'super-board';
+
+    for (let boardIndex = 0; boardIndex < 9; boardIndex++) {
+        const smallBoard = document.createElement('div');
+        smallBoard.className = 'small-board';
+
+        const isActive = state.activeBoard === null || state.activeBoard === boardIndex;
+        const boardWinner = state.wonBoards[boardIndex];
+
+        if (isActive && !boardWinner && !state.gameOver) {
+            smallBoard.classList.add('active');
+        }
+        if (boardWinner) {
+            smallBoard.classList.add('won');
+        }
+
+        const boardGrid = document.createElement('div');
+        boardGrid.className = 'board-grid';
+
+        for (let cellIndex = 0; cellIndex < 9; cellIndex++) {
+            const cell = document.createElement('button');
+            cell.className = 'cell';
+            cell.textContent = state.boards[boardIndex][cellIndex];
+
+            if (state.boards[boardIndex][cellIndex]) {
+                cell.classList.add(state.boards[boardIndex][cellIndex].toLowerCase());
+            }
+
+            const isClickable = !state.gameOver &&
+                !state.wonBoards[boardIndex] &&
+                !state.boards[boardIndex][cellIndex] &&
+                (state.activeBoard === null || state.activeBoard === boardIndex) &&
+                myPlayer === state.currentPlayer;
+
+            cell.disabled = !isClickable;
+
+            if (isClickable) {
+                cell.onclick = () => makeMove(boardIndex, cellIndex, state);
+            }
+
+            boardGrid.appendChild(cell);
+        }
+
+        smallBoard.appendChild(boardGrid);
+
+        if (boardWinner) {
+            const winnerOverlay = document.createElement('div');
+            winnerOverlay.className = `board-winner ${boardWinner.toLowerCase()}`;
+            winnerOverlay.textContent = boardWinner === 'tie' ? 'TIE' : boardWinner;
+            smallBoard.appendChild(winnerOverlay);
+        }
+
+        superBoard.appendChild(smallBoard);
+    }
+
+    gameArea.appendChild(superBoard);
+
+    // Show winner if game over
+    if (state.gameOver) {
+        const overDiv = document.createElement('div');
+        overDiv.className = `game-over ${state.gameWinner.toLowerCase()}`;
+        overDiv.textContent = state.gameWinner === 'tie'
+            ? 'Game Tied!'
+            : `Player ${state.gameWinner} Wins!`;
+        gameArea.appendChild(overDiv);
+    }
 }
 
-// TODO: Implement board rendering, move handling, timer logic, and back-to-lobby/game reset
-// This is a skeleton; fill in UI and game logic as needed.
+// Called when a player clicks a cell
+function makeMove(boardIndex, cellIndex, state) {
+    // Only allow if it's your turn and move is valid
+    if (state.gameOver || myPlayer !== state.currentPlayer) return;
+
+    // Copy state to avoid mutating directly
+    const newState = JSON.parse(JSON.stringify(state));
+
+    // Make the move
+    newState.boards[boardIndex][cellIndex] = myPlayer;
+
+    // Check for small board win/tie
+    const boardResult = checkWin(newState.boards[boardIndex]);
+    if (boardResult && boardResult !== 'tie') {
+        newState.wonBoards[boardIndex] = boardResult;
+    } else if (boardResult === 'tie') {
+        newState.wonBoards[boardIndex] = 'tie';
+    }
+
+    // Check for overall win/tie
+    const overallWinner = checkWin(newState.wonBoards.map(r => r === 'tie' ? '' : r));
+    if (overallWinner && overallWinner !== 'tie') {
+        newState.gameWinner = overallWinner;
+        newState.gameOver = true;
+        newState.activeBoard = null;
+    } else if (newState.wonBoards.every(r => r !== '')) {
+        newState.gameWinner = 'tie';
+        newState.gameOver = true;
+        newState.activeBoard = null;
+    } else {
+        // Determine next active board
+        const nextBoardIndex = cellIndex;
+        if (newState.wonBoards[nextBoardIndex] || isBoardFull(newState.boards[nextBoardIndex])) {
+            newState.activeBoard = null;
+        } else {
+            newState.activeBoard = nextBoardIndex;
+        }
+    }
+
+    // Switch player
+    newState.currentPlayer = myPlayer === 'X' ? 'O' : 'X';
+
+    // Write new state to Firebase
+    firebaseDatabase.ref('games/' + currentGameCode + '/state').set(newState);
+}
+
+// Helper: check win for a board
+function checkWin(board) {
+    const winPatterns = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8],
+        [0, 3, 6], [1, 4, 7], [2, 5, 8],
+        [0, 4, 8], [2, 4, 6]
+    ];
+    for (const pattern of winPatterns) {
+        const [a, b, c] = pattern;
+        if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+            return board[a];
+        }
+    }
+    return board.every(cell => cell !== '') ? 'tie' : '';
+}
+
+// Helper: check if board is full
+function isBoardFull(board) {
+    return board.every(cell => cell !== '');
+}

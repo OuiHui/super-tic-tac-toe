@@ -1,0 +1,81 @@
+# Super Tic-Tac-Toe React
+
+A modern React implementation of Super Tic-Tac-Toe with Firebase real-time multiplayer support.
+
+## Features
+
+- **Local Single Player**: Play against yourself
+- **Online Multiplayer**: Real-time multiplayer using Firebase
+- **Real-time Sync**: Game state synchronizes across all players instantly
+- **Timer System**: Each player has a countdown timer
+- **Modern UI**: Clean, responsive React interface
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v16 or higher)
+- npm or yarn
+
+### Installation
+
+1. Install dependencies:
+```bash
+npm install
+```
+
+2. Start the development server:
+```bash
+npm run dev
+```
+
+3. Open your browser and navigate to the URL shown in the terminal (usually `http://localhost:5173`)
+
+### Building for Production
+
+```bash
+npm run build
+```
+
+### Running the Production Build
+
+```bash
+npm run preview
+```
+
+## How to Play
+
+### Local Game
+1. Click "Local Single Player"
+2. Take turns clicking on the game board
+3. Try to win 3 small boards in a row!
+
+### Online Multiplayer
+1. Click "Online Multiplayer"
+2. Enter your display name
+3. Either:
+   - Click "Create Game" to start a new game and share the code
+   - Enter a game code and click "Join Game" to join an existing game
+4. Wait for another player to join
+5. Play in real-time!
+
+## Game Rules
+
+- Win small boards by getting 3 in a row within each 3×3 grid
+- Your move determines which board your opponent must play in next
+- If the target board is full or already won, opponent can play anywhere
+- Win the game by getting 3 small boards in a row!
+- Green highlight shows where you can currently play
+
+## Technologies Used
+
+- **React 18** - Modern React with hooks
+- **Vite** - Fast build tool and dev server
+- **Firebase** - Real-time database for multiplayer
+- **CSS3** - Modern styling with gradients and animations
+
+
+
+
+
+
