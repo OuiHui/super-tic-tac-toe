@@ -2,7 +2,7 @@ import { useState } from 'react'
 import StartMenu from './components/StartMenu'
 import GameContainer from './components/GameContainer'
 import { FirebaseProvider } from './contexts/FirebaseContext'
-import './App.css'
+import './styles/index.css'
 
 function App() {
   const [gameMode, setGameMode] = useState('menu') // 'menu', 'local', 'online'

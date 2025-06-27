@@ -1,0 +1,160 @@
+/* Button Styles */
+
+.button {
+  background: rgba(0, 0, 0, 0.9);
+  color: #00c8ff;
+  border: 2px solid rgba(0, 200, 255, 0.8);
+  padding: 15px 30px;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: 'Orbitron', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  margin: 0.5rem;
+  box-shadow: 
+    0 0 20px rgba(0, 200, 255, 0.4), 
+    0 0 40px rgba(0, 200, 255, 0.2),
+    inset 0 0 20px rgba(0, 200, 255, 0.05),
+    0 8px 25px rgba(0, 0, 0, 0.6);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  text-shadow: 0 0 10px rgba(0, 200, 255, 0.6);
+}
+
+.x-turn .button {
+  border-color: rgba(255, 50, 80, 0.8);
+  color: #ff3250;
+  box-shadow: 
+    0 0 20px rgba(255, 50, 80, 0.4), 
+    0 0 40px rgba(255, 50, 80, 0.2),
+    inset 0 0 20px rgba(255, 50, 80, 0.05),
+    0 8px 25px rgba(0, 0, 0, 0.6);
+  text-shadow: 0 0 10px rgba(255, 50, 80, 0.6);
+}
+
+.o-turn .button {
+  border-color: rgba(0, 200, 255, 0.8);
+  color: #00c8ff;
+  box-shadow: 
+    0 0 20px rgba(0, 200, 255, 0.4), 
+    0 0 40px rgba(0, 200, 255, 0.2),
+    inset 0 0 20px rgba(0, 200, 255, 0.05),
+    0 8px 25px rgba(0, 0, 0, 0.6);
+  text-shadow: 0 0 10px rgba(0, 200, 255, 0.6);
+}
+
+.button::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  background: linear-gradient(45deg, 
+    rgba(0, 200, 255, 0.4), 
+    rgba(0, 200, 255, 0.2), 
+    rgba(0, 200, 255, 0.4));
+  border-radius: 33px;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  filter: blur(8px);
+}
+
+.button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(0, 200, 255, 0.3), 
+    transparent);
+  transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.button:hover {
+  transform: translateY(-4px) scale(1.02);
+  border-color: rgba(255, 50, 80, 0.9);
+  color: #ff3250;
+  box-shadow: 
+    0 0 30px rgba(255, 50, 80, 0.7), 
+    0 0 60px rgba(255, 50, 80, 0.4),
+    0 0 90px rgba(255, 50, 80, 0.2),
+    0 12px 35px rgba(0, 0, 0, 0.8);
+}
+
+.button:hover::before {
+  opacity: 1;
+  background: linear-gradient(45deg, 
+    rgba(255, 50, 80, 0.6), 
+    rgba(255, 50, 80, 0.3), 
+    rgba(255, 50, 80, 0.6));
+  animation: buttonGlowRed 1.5s ease-in-out infinite alternate;
+}
+
+.button:hover::after {
+  left: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 50, 80, 0.4), 
+    transparent);
+}
+
+.button:active {
+  transform: translateY(-1px) scale(0.98);
+  border-color: rgba(255, 50, 80, 1);
+  box-shadow: 
+    0 0 20px rgba(255, 50, 80, 0.9), 
+    0 0 40px rgba(255, 50, 80, 0.6),
+    inset 0 0 20px rgba(255, 50, 80, 0.2),
+    0 6px 20px rgba(255, 50, 80, 0.8);
+  background: rgba(0, 0, 0, 1);
+}
+
+/* Player X turn button hover - blue effect */
+.x-turn .button:hover {
+  transform: translateY(-4px) scale(1.02);
+  border-color: rgba(0, 200, 255, 0.9);
+  color: #00c8ff;
+  box-shadow: 
+    0 0 30px rgba(0, 200, 255, 0.7), 
+    0 0 60px rgba(0, 200, 255, 0.4),
+    0 0 90px rgba(0, 200, 255, 0.2),
+    0 12px 35px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 0 15px rgba(0, 200, 255, 0.8);
+}
+
+.x-turn .button:hover::before {
+  opacity: 1;
+  background: linear-gradient(45deg, 
+    rgba(0, 200, 255, 0.6), 
+    rgba(0, 200, 255, 0.3), 
+    rgba(0, 200, 255, 0.6));
+  animation: buttonGlow 1.5s ease-in-out infinite alternate;
+}
+
+.x-turn .button:hover::after {
+  left: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(0, 200, 255, 0.4), 
+    transparent);
+}
+
+.x-turn .button:active {
+  transform: translateY(-1px) scale(0.98);
+  border-color: rgba(0, 200, 255, 1);
+  box-shadow: 
+    0 0 20px rgba(0, 200, 255, 0.9), 
+    0 0 40px rgba(0, 200, 255, 0.6),
+    inset 0 0 20px rgba(0, 200, 255, 0.2),
+    0 6px 20px rgba(0, 200, 255, 0.8);
+  background: rgba(0, 0, 0, 1);
+}

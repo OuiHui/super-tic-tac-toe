@@ -1,0 +1,157 @@
+/* Timer Styles */
+
+.timers {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin: 1.5rem 0;
+}
+
+.timer {
+  background: rgba(10, 10, 20, 0.9);
+  padding: 1.2rem 2rem;
+  border-radius: 30px;
+  font-weight: bold;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  color: #aaa;
+  font-family: 'Orbitron', monospace;
+  letter-spacing: 0.1em;
+  transition: all 0.4s ease;
+  position: relative;
+  backdrop-filter: blur(15px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 140px;
+  box-shadow: 
+    0 5px 20px rgba(0, 0, 0, 0.5),
+    inset 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.timer-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+.timer-value {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.timer.x-player {
+  border-color: rgba(255, 50, 80, 0.6);
+  background: rgba(25, 5, 10, 0.9);
+  box-shadow: 
+    0 0 30px rgba(255, 50, 80, 0.4),
+    0 5px 20px rgba(0, 0, 0, 0.6),
+    inset 0 0 25px rgba(255, 50, 80, 0.1);
+}
+
+.timer.x-player .timer-label {
+  color: #ff3250;
+  text-shadow: 0 0 8px rgba(255, 50, 80, 0.6);
+}
+
+.timer.x-player .timer-value {
+  color: #ff3250;
+  text-shadow: 0 0 15px rgba(255, 50, 80, 0.8);
+}
+
+.timer.o-player {
+  border-color: rgba(0, 200, 255, 0.6);
+  background: rgba(5, 15, 25, 0.9);
+  box-shadow: 
+    0 0 30px rgba(0, 200, 255, 0.4),
+    0 5px 20px rgba(0, 0, 0, 0.6),
+    inset 0 0 25px rgba(0, 200, 255, 0.1);
+}
+
+.timer.o-player .timer-label {
+  color: #00c8ff;
+  text-shadow: 0 0 8px rgba(0, 200, 255, 0.6);
+}
+
+.timer.o-player .timer-value {
+  color: #00c8ff;
+  text-shadow: 0 0 15px rgba(0, 200, 255, 0.8);
+}
+
+.timer.warning {
+  animation: timerWarning 1s ease-in-out infinite alternate;
+}
+
+.timer.critical {
+  animation: timerCritical 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes timerWarning {
+  0% { opacity: 1; }
+  100% { opacity: 0.7; }
+}
+
+@keyframes timerCritical {
+  0% { 
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% { 
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+.timer.active {
+  animation: activePulse 2s ease-in-out infinite;
+  border-width: 3px;
+  transform: scale(1.05);
+}
+
+.timer.active.player-x {
+  border-color: rgba(255, 50, 80, 0.9);
+  background: rgba(40, 5, 10, 0.95);
+  box-shadow: 
+    0 0 50px rgba(255, 50, 80, 0.6),
+    0 0 100px rgba(255, 50, 80, 0.3),
+    0 5px 25px rgba(0, 0, 0, 0.7),
+    inset 0 0 30px rgba(255, 50, 80, 0.15);
+}
+
+.timer.active.player-x .timer-label {
+  color: #ff6080;
+  text-shadow: 0 0 12px rgba(255, 50, 80, 0.9);
+  animation: textGlow 1.5s ease-in-out infinite alternate;
+}
+
+.timer.active.player-x .timer-value {
+  color: #ff4060;
+  text-shadow: 0 0 20px rgba(255, 50, 80, 1);
+  animation: valueGlow 1s ease-in-out infinite alternate;
+}
+
+.timer.active.player-o {
+  border-color: rgba(0, 200, 255, 0.9);
+  background: rgba(5, 20, 35, 0.95);
+  box-shadow: 
+    0 0 50px rgba(0, 200, 255, 0.6),
+    0 0 100px rgba(0, 200, 255, 0.3),
+    0 5px 25px rgba(0, 0, 0, 0.7),
+    inset 0 0 30px rgba(0, 200, 255, 0.15);
+}
+
+.timer.active.player-o .timer-label {
+  color: #40d8ff;
+  text-shadow: 0 0 12px rgba(0, 200, 255, 0.9);
+  animation: textGlow 1.5s ease-in-out infinite alternate;
+}
+
+.timer.active.player-o .timer-value {
+  color: #20d0ff;
+  text-shadow: 0 0 20px rgba(0, 200, 255, 1);
+  animation: valueGlow 1s ease-in-out infinite alternate;
+}

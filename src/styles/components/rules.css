@@ -1,0 +1,183 @@
+/* Rules Styles */
+
+.rules {
+  margin-top: 2rem;
+  text-align: left;
+  background: rgba(10, 10, 20, 0.9);
+  padding: 2rem;
+  border-radius: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  box-shadow: 
+    0 5px 20px rgba(0, 0, 0, 0.5),
+    inset 0 0 20px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.rules h3 {
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  text-shadow: 
+    0 0 10px rgba(0, 200, 255, 0.8),
+    0 0 20px rgba(0, 200, 255, 0.4),
+    0 0 30px rgba(0, 200, 255, 0.2);
+  font-family: 'Orbitron', monospace;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 1.3rem;
+  animation: textShimmer 3s ease-in-out infinite;
+}
+
+.rules ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.rules li {
+  margin-bottom: 1rem;
+  position: relative;
+  padding-left: 2.5rem;
+  color: #e8e8e8;
+  font-size: 1rem;
+  line-height: 1.5;
+  font-family: 'Orbitron', monospace;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.rules li:hover {
+  color: #ffffff;
+  text-shadow: 
+    0 0 8px rgba(255, 255, 255, 0.6),
+    0 0 15px rgba(0, 200, 255, 0.5),
+    0 0 25px rgba(0, 200, 255, 0.3);
+  transform: translateX(5px);
+}
+
+.rules li:before {
+  content: "▶";
+  color: #00c8ff;
+  position: absolute;
+  left: 0;
+  font-size: 1rem;
+  text-shadow: 
+    0 0 8px rgba(0, 200, 255, 0.8),
+    0 0 15px rgba(0, 200, 255, 0.4);
+  animation: arrowPulse 2s ease-in-out infinite alternate;
+  transition: all 0.3s ease;
+}
+
+.rules li:hover:before {
+  color: #40d8ff;
+  text-shadow: 
+    0 0 12px rgba(64, 216, 255, 1),
+    0 0 20px rgba(64, 216, 255, 0.6),
+    0 0 30px rgba(64, 216, 255, 0.3);
+  transform: scale(1.2);
+}
+
+/* Enhanced interactivity - Text focused */
+.rules:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.6),
+    inset 0 0 25px rgba(0, 0, 0, 0.4);
+}
+
+/* Player-specific theming with vibrant neon effects */
+.rules.x-theme {
+  border-color: rgba(255, 50, 80, 0.6);
+  background: rgba(25, 5, 10, 0.9);
+  box-shadow: 
+    0 0 30px rgba(255, 50, 80, 0.4),
+    0 5px 20px rgba(0, 0, 0, 0.6),
+    inset 0 0 25px rgba(255, 50, 80, 0.1);
+}
+
+.rules.x-theme h3 {
+  color: #ffffff;
+  text-shadow: 
+    0 0 10px rgba(255, 50, 80, 0.9),
+    0 0 20px rgba(255, 50, 80, 0.6),
+    0 0 30px rgba(255, 50, 80, 0.3);
+}
+
+.rules.x-theme li:before {
+  color: #ff3250;
+  text-shadow: 
+    0 0 8px rgba(255, 50, 80, 0.8),
+    0 0 15px rgba(255, 50, 80, 0.4);
+}
+
+.rules.x-theme li:hover {
+  text-shadow: 
+    0 0 8px rgba(255, 255, 255, 0.6),
+    0 0 15px rgba(255, 50, 80, 0.5),
+    0 0 25px rgba(255, 50, 80, 0.3);
+}
+
+.rules.x-theme li:hover:before {
+  color: #ff6080;
+  text-shadow: 
+    0 0 12px rgba(255, 96, 128, 1),
+    0 0 20px rgba(255, 96, 128, 0.6),
+    0 0 30px rgba(255, 96, 128, 0.3);
+}
+
+.rules.o-theme {
+  border-color: rgba(0, 200, 255, 0.6);
+  background: rgba(5, 15, 25, 0.9);
+  box-shadow: 
+    0 0 30px rgba(0, 200, 255, 0.4),
+    0 5px 20px rgba(0, 0, 0, 0.6),
+    inset 0 0 25px rgba(0, 200, 255, 0.1);
+}
+
+.rules.o-theme h3 {
+  color: #ffffff;
+  text-shadow: 
+    0 0 10px rgba(0, 200, 255, 0.9),
+    0 0 20px rgba(0, 200, 255, 0.6),
+    0 0 30px rgba(0, 200, 255, 0.3);
+}
+
+.rules.o-theme li:before {
+  color: #00c8ff;
+  text-shadow: 
+    0 0 8px rgba(0, 200, 255, 0.8),
+    0 0 15px rgba(0, 200, 255, 0.4);
+}
+
+.rules.o-theme li:hover {
+  text-shadow: 
+    0 0 8px rgba(255, 255, 255, 0.6),
+    0 0 15px rgba(0, 200, 255, 0.5),
+    0 0 25px rgba(0, 200, 255, 0.3);
+}
+
+.rules.o-theme li:hover:before {
+  color: #40d8ff;
+  text-shadow: 
+    0 0 12px rgba(64, 216, 255, 1),
+    0 0 20px rgba(64, 216, 255, 0.6),
+    0 0 30px rgba(64, 216, 255, 0.3);
+}
+
+/* Special emphasis for key rules */
+.rules li:nth-child(1),
+.rules li:nth-child(4) {
+  font-weight: 600;
+  color: #f0f0f0;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+.rules li:nth-child(1):hover,
+.rules li:nth-child(4):hover {
+  text-shadow: 
+    0 0 10px rgba(255, 255, 255, 0.6),
+    0 0 20px rgba(0, 200, 255, 0.4),
+    0 0 30px rgba(0, 200, 255, 0.2);
+}

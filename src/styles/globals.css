@@ -1,0 +1,41 @@
+/* Global styles and CSS reset */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Orbitron', 'Inter', 'Segoe UI', system-ui, sans-serif;
+  background: 
+    linear-gradient(90deg, rgba(0, 200, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(0, 200, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 50, 80, 0.05) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(255, 50, 80, 0.05) 1px, transparent 1px),
+    radial-gradient(ellipse at center, #0a0a0f 0%, #000000 70%), 
+    linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #16213e 100%);
+  background-size: 
+    100px 100px,
+    100px 100px,
+    50px 50px,
+    50px 50px,
+    100% 100%,
+    100% 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  animation: gridPulse 8s ease-in-out infinite alternate;
+}
+
+.App {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}

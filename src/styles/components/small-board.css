@@ -1,0 +1,129 @@
+/* Small Board Styles */
+
+.small-board {
+  background: rgba(10, 10, 25, 0.95);
+  border-radius: 15px;
+  padding: 12px;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    inset 0 0 25px rgba(0, 0, 0, 0.7),
+    0 5px 20px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(0, 200, 255, 0.1);
+}
+
+.small-board.active {
+  background: rgba(0, 200, 255, 0.08);
+  box-shadow: 
+    0 0 0 4px #00c8ff,
+    0 0 40px rgba(0, 200, 255, 0.7),
+    0 0 80px rgba(0, 200, 255, 0.4),
+    inset 0 0 40px rgba(0, 200, 255, 0.15),
+    0 10px 30px rgba(0, 0, 0, 0.8);
+  transform: scale(1.03);
+  animation: activeGlow 2.5s ease-in-out infinite alternate;
+  border: 2px solid rgba(0, 200, 255, 0.6);
+  transition: all 0.3s ease;
+}
+
+.small-board.active-x {
+  background: rgba(255, 50, 80, 0.08);
+  box-shadow: 
+    0 0 0 4px #ff3250,
+    0 0 40px rgba(255, 50, 80, 0.7),
+    0 0 80px rgba(255, 50, 80, 0.4),
+    inset 0 0 40px rgba(255, 50, 80, 0.15),
+    0 10px 30px rgba(0, 0, 0, 0.8);
+  border-color: rgba(255, 50, 80, 0.6);
+  animation: activeGlowRed 2.5s ease-in-out infinite alternate;
+}
+
+.small-board.active-o {
+  background: rgba(0, 200, 255, 0.08);
+  box-shadow: 
+    0 0 0 4px #00c8ff,
+    0 0 40px rgba(0, 200, 255, 0.7),
+    0 0 80px rgba(0, 200, 255, 0.4),
+    inset 0 0 40px rgba(0, 200, 255, 0.15),
+    0 10px 30px rgba(0, 0, 0, 0.8);
+  border-color: rgba(0, 200, 255, 0.6);
+  animation: activeGlowBlue 2.5s ease-in-out infinite alternate;
+}
+
+.small-board.active::before,
+.small-board.active-x::before,
+.small-board.active-o::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  right: -6px;
+  bottom: -6px;
+  background: linear-gradient(45deg, 
+    rgba(0, 200, 255, 0.3), 
+    rgba(0, 200, 255, 0.1), 
+    rgba(0, 200, 255, 0.3));
+  border-radius: 20px;
+  z-index: -1;
+  filter: blur(15px);
+  animation: activeBoardGlow 2s ease-in-out infinite alternate;
+  transition: all 0.6s ease;
+}
+
+.small-board.active-x::before {
+  background: linear-gradient(45deg, 
+    rgba(255, 50, 80, 0.4), 
+    rgba(255, 50, 80, 0.2), 
+    rgba(255, 50, 80, 0.4));
+}
+
+.small-board.active-o::before {
+  background: linear-gradient(45deg, 
+    rgba(0, 200, 255, 0.4), 
+    rgba(0, 200, 255, 0.2), 
+    rgba(0, 200, 255, 0.4));
+}
+
+.small-board.won {
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.small-board.won.x {
+  background: rgba(255, 50, 80, 0.15);
+  border-color: rgba(255, 50, 80, 0.8);
+  box-shadow: 
+    0 0 0 4px #ff3250,
+    0 0 40px rgba(255, 50, 80, 0.8),
+    0 0 80px rgba(255, 50, 80, 0.5),
+    inset 0 0 40px rgba(255, 50, 80, 0.2);
+  animation: boardWinRed 3s ease-in-out infinite;
+}
+
+.small-board.won.o {
+  background: rgba(0, 200, 255, 0.15);
+  border-color: rgba(0, 200, 255, 0.8);
+  box-shadow: 
+    0 0 0 4px #00c8ff,
+    0 0 40px rgba(0, 200, 255, 0.8),
+    0 0 80px rgba(0, 200, 255, 0.5),
+    inset 0 0 40px rgba(0, 200, 255, 0.2);
+  animation: boardWinBlue 3s ease-in-out infinite;
+}
+
+.small-board.won.tie {
+  background: rgba(150, 150, 150, 0.1);
+  border-color: rgba(150, 150, 150, 0.6);
+  box-shadow: 
+    0 0 0 3px #888,
+    0 0 30px rgba(150, 150, 150, 0.5),
+    inset 0 0 30px rgba(150, 150, 150, 0.1);
+  animation: boardWinTie 3s ease-in-out infinite;
+}
+
+.board-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+}

@@ -1,0 +1,107 @@
+/* Super Board Styles */
+
+.super-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  max-width: 850px;
+  margin: 2rem auto;
+  background: rgba(5, 5, 15, 0.98);
+  padding: 40px;
+  border-radius: 25px;
+  box-shadow: 
+    0 0 60px rgba(0, 200, 255, 0.4),
+    0 0 120px rgba(255, 50, 80, 0.25),
+    inset 0 0 60px rgba(0, 0, 0, 0.7),
+    0 20px 60px rgba(0, 0, 0, 0.8);
+  border: 3px solid rgba(0, 200, 255, 0.3);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.super-board.x-turn {
+  border-color: rgba(255, 50, 80, 0.6);
+  box-shadow: 
+    0 0 60px rgba(255, 50, 80, 0.5),
+    0 0 120px rgba(255, 50, 80, 0.3),
+    inset 0 0 60px rgba(0, 0, 0, 0.7),
+    0 20px 60px rgba(0, 0, 0, 0.8);
+}
+
+.super-board.o-turn {
+  border-color: rgba(0, 200, 255, 0.6);
+  box-shadow: 
+    0 0 60px rgba(0, 200, 255, 0.5),
+    0 0 120px rgba(0, 200, 255, 0.3),
+    inset 0 0 60px rgba(0, 0, 0, 0.7),
+    0 20px 60px rgba(0, 0, 0, 0.8);
+}
+
+.super-board::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  background: linear-gradient(45deg, 
+    rgba(0, 200, 255, 0.4), 
+    rgba(255, 50, 80, 0.4), 
+    rgba(0, 200, 255, 0.4), 
+    rgba(255, 50, 80, 0.4));
+  border-radius: 25px;
+  z-index: -1;
+  animation: boardGlow 5s ease-in-out infinite;
+  transition: all 0.3s ease;
+}
+
+.super-board.x-turn::before {
+  background: linear-gradient(45deg, 
+    rgba(255, 50, 80, 0.5), 
+    rgba(255, 50, 80, 0.3), 
+    rgba(255, 50, 80, 0.5), 
+    rgba(255, 50, 80, 0.3));
+}
+
+.super-board.o-turn::before {
+  background: linear-gradient(45deg, 
+    rgba(0, 200, 255, 0.5), 
+    rgba(0, 200, 255, 0.3), 
+    rgba(0, 200, 255, 0.5), 
+    rgba(0, 200, 255, 0.3));
+}
+
+.super-board::after {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
+  background: linear-gradient(45deg, 
+    rgba(0, 200, 255, 0.2), 
+    rgba(255, 50, 80, 0.15), 
+    rgba(0, 200, 255, 0.2), 
+    rgba(255, 50, 80, 0.15));
+  border-radius: 30px;
+  z-index: -2;
+  filter: blur(20px);
+  animation: boardGlow 5s ease-in-out infinite reverse;
+  transition: all 0.3s ease;
+}
+
+.super-board.x-turn::after {
+  background: linear-gradient(45deg, 
+    rgba(255, 50, 80, 0.3), 
+    rgba(255, 50, 80, 0.15), 
+    rgba(255, 50, 80, 0.3), 
+    rgba(255, 50, 80, 0.15));
+}
+
+.super-board.o-turn::after {
+  background: linear-gradient(45deg, 
+    rgba(0, 200, 255, 0.3), 
+    rgba(0, 200, 255, 0.15), 
+    rgba(0, 200, 255, 0.3), 
+    rgba(0, 200, 255, 0.15));
+}

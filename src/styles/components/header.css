@@ -1,0 +1,26 @@
+/* Header Styles */
+
+h1 {
+  font-family: 'Orbitron', monospace;
+  color: #fff;
+  margin-bottom: 1.5rem;
+  font-size: 3.8rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  text-shadow: 
+    0 0 15px rgba(255, 255, 255, 0.3),
+    0 0 25px rgba(0, 200, 255, 0.3);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+h1.x-glow {
+  color: #ff3250;
+  text-shadow: 0 0 15px rgba(255, 50, 80, 0.6);
+}
+
+h1.o-glow {
+  color: #00c8ff;
+  text-shadow: 0 0 15px rgba(0, 200, 255, 0.6);
+}

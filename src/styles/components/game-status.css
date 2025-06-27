@@ -1,0 +1,111 @@
+/* Game Status Styles */
+
+.current-player {
+  font-size: 1.4rem;
+  font-weight: 900;
+  margin-bottom: 0.8rem;
+  font-family: 'Orbitron', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #fff;
+  text-shadow: 
+    0 0 15px rgba(255, 255, 255, 0.3),
+    0 0 25px rgba(0, 200, 255, 0.2);
+  background: rgba(10, 10, 25, 0.8);
+  padding: 12px 20px;
+  border-radius: 15px;
+  border: 2px solid rgba(0, 200, 255, 0.3);
+  backdrop-filter: blur(10px);
+  display: inline-block;
+  position: relative;
+  animation: currentPlayerGlow 1s ease-in-out infinite alternate;
+  transition: all 0.3s ease;
+}
+
+.current-player.x-player {
+  border-color: rgba(255, 50, 80, 0.6);
+  background: rgba(25, 5, 10, 0.8);
+  text-shadow: 
+    0 0 15px rgba(255, 255, 255, 0.3),
+    0 0 25px rgba(255, 50, 80, 0.3);
+  animation: currentPlayerGlowRed 3s ease-in-out infinite alternate;
+}
+
+.current-player.x-player .current-player-label {
+  color: #ff3250;
+  text-shadow: 0 0 15px rgba(255, 50, 80, 0.6);
+}
+
+.current-player.o-player {
+  border-color: rgba(0, 200, 255, 0.6);
+  background: rgba(5, 15, 25, 0.8);
+
+  animation: currentPlayerGlowBlue 3s ease-in-out infinite alternate;
+}
+
+.current-player.o-player .current-player-label {
+  color: #00c8ff;
+  text-shadow: 0 0 15px rgba(0, 200, 255, 0.6);
+}
+
+.current-player-label {
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.current-player::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  background: linear-gradient(45deg, 
+    rgba(0, 200, 255, 0.3), 
+    rgba(255, 50, 80, 0.2), 
+    rgba(0, 200, 255, 0.3));
+  border-radius: 18px;
+  z-index: -1;
+  filter: blur(8px);
+  opacity: 0.6;
+  animation: currentPlayerHalo 4s ease-in-out infinite;
+  transition: all 0.3s ease;
+}
+
+.current-player.x-player::before {
+  background: linear-gradient(45deg, 
+    rgba(255, 50, 80, 0.4), 
+    rgba(255, 50, 80, 0.2), 
+    rgba(255, 50, 80, 0.4));
+}
+
+.current-player.o-player::before {
+  background: linear-gradient(45deg, 
+    rgba(0, 200, 255, 0.4), 
+    rgba(0, 200, 255, 0.2), 
+    rgba(0, 200, 255, 0.4));
+}
+
+.game-instruction {
+  color: #666;
+  font-style: italic;
+  font-family: 'Orbitron', monospace;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.3s ease;
+}
+
+.game-instruction.x-theme {
+  color: #ff3250;
+  text-shadow: 
+    0 0 10px rgba(255, 50, 80, 0.6),
+    0 0 20px rgba(255, 50, 80, 0.3);
+}
+
+.game-instruction.o-theme {
+  color: #00c8ff;
+  text-shadow: 
+    0 0 10px rgba(0, 200, 255, 0.6),
+    0 0 20px rgba(0, 200, 255, 0.3);
+}
