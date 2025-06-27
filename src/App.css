@@ -54,7 +54,7 @@ body {
   margin: 0 auto;
   backdrop-filter: blur(25px);
   position: relative;
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .game-container.x-turn {
@@ -88,7 +88,7 @@ body {
   border-radius: 25px;
   z-index: -1;
   animation: borderGlow 4s ease-in-out infinite alternate;
-  transition: all 0.6s ease;
+  transition: all 0.3s ease;
 }
 
 
@@ -105,7 +105,7 @@ body {
   z-index: -2;
   filter: blur(20px);
   animation: borderGlow 4s ease-in-out infinite alternate reverse;
-  transition: all 0.6s ease;
+  transition: all 0.3s ease;
 }
 
 
@@ -148,7 +148,7 @@ h1 {
     0 0 15px rgba(255, 255, 255, 0.3),
     0 0 25px rgba(0, 200, 255, 0.3);
   position: relative;
-  transition: all 0.6s ease;
+  transition: all 0.3s ease;
 }
 
 h1.x-glow {
@@ -243,7 +243,7 @@ h1.o-glow {
   display: inline-block;
   position: relative;
   animation: currentPlayerGlow 3s ease-in-out infinite alternate;
-  transition: all 0.6s ease;
+  transition: all 0.3s ease;
 }
 
 .current-player.x-player {
@@ -276,7 +276,7 @@ h1.o-glow {
 
 .current-player-label {
   color: #fff;
-  transition: all 0.6s ease;
+  transition: all 0.3s ease;
 }
 
 .current-player::before {
@@ -295,7 +295,7 @@ h1.o-glow {
   filter: blur(8px);
   opacity: 0.6;
   animation: currentPlayerHalo 4s ease-in-out infinite;
-  transition: all 0.6s ease;
+  transition: all 0.3s ease;
 }
 
 .current-player.x-player::before {
@@ -375,7 +375,7 @@ h1.o-glow {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  transition: all 0.6s ease;
+  transition: all 0.3s ease;
 }
 
 .game-instruction.x-theme {
@@ -410,7 +410,7 @@ h1.o-glow {
     0 20px 60px rgba(0, 0, 0, 0.8);
   border: 3px solid rgba(0, 200, 255, 0.3);
   position: relative;
-  transition: all 0.6s ease;
+  transition: all 0.3s ease;
 }
 
 .super-board.x-turn {
@@ -446,7 +446,7 @@ h1.o-glow {
   border-radius: 25px;
   z-index: -1;
   animation: boardGlow 5s ease-in-out infinite;
-  transition: all 0.6s ease;
+  transition: all 0.3s ease;
 }
 
 .super-board.x-turn::before {
@@ -1171,26 +1171,46 @@ h1.o-glow {
   background: rgba(0, 0, 0, 1);
 }
 
-@keyframes buttonGlow {
-  0% { 
-    filter: blur(5px);
-    opacity: 0.6;
-  }
-  100% { 
-    filter: blur(10px);
-    opacity: 0.9;
-  }
+/* Player X turn button hover - blue effect */
+.x-turn .button:hover {
+  transform: translateY(-4px) scale(1.02);
+  border-color: rgba(0, 200, 255, 0.9);
+  color: #00c8ff;
+  box-shadow: 
+    0 0 30px rgba(0, 200, 255, 0.7), 
+    0 0 60px rgba(0, 200, 255, 0.4),
+    0 0 90px rgba(0, 200, 255, 0.2),
+    inset 0 0 25px rgba(0, 200, 255, 0.1),
+    0 12px 35px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 0 15px rgba(0, 200, 255, 0.8);
 }
 
-@keyframes buttonGlowRed {
-  0% { 
-    filter: blur(8px);
-    opacity: 0.5;
-  }
-  100% { 
-    filter: blur(15px);
-    opacity: 0.8;
-  }
+.x-turn .button:hover::before {
+  opacity: 1;
+  background: linear-gradient(45deg, 
+    rgba(0, 200, 255, 0.6), 
+    rgba(0, 200, 255, 0.3), 
+    rgba(0, 200, 255, 0.6));
+  animation: buttonGlow 1.5s ease-in-out infinite alternate;
+}
+
+.x-turn .button:hover::after {
+  left: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(0, 200, 255, 0.4), 
+    transparent);
+}
+
+.x-turn .button:active {
+  transform: translateY(-1px) scale(0.98);
+  border-color: rgba(0, 200, 255, 1);
+  box-shadow: 
+    0 0 20px rgba(0, 200, 255, 0.9), 
+    0 0 40px rgba(0, 200, 255, 0.6),
+    inset 0 0 20px rgba(0, 200, 255, 0.2),
+    0 6px 20px rgba(0, 200, 255, 0.8);
+  background: rgba(0, 0, 0, 1);
 }
 
 .timers {
