@@ -99,8 +99,8 @@ function GameContainer({ gameMode, gameCode, onBackToMenu }) {
   }
 
   return (
-    <div className="game-container">
-      <h1>Super Tic-Tac-Toe</h1>
+    <div className={`game-container ${gameState.currentPlayer.toLowerCase()}-turn`}>
+      <h1 data-text="SUPER TIC-TAC-TOE" className={`game-title ${gameState.currentPlayer.toLowerCase()}-glow`}>SUPER TIC-TAC-TOE</h1>
       
       <GameStatus 
         gameState={gameState} 
@@ -110,27 +110,29 @@ function GameContainer({ gameMode, gameCode, onBackToMenu }) {
       <Timer 
         playerXTime={gameState.playerXTime}
         playerOTime={gameState.playerOTime}
+        currentPlayer={gameState.currentPlayer}
       />
       
       <SuperBoard
         gameState={gameState}
         onCellClick={handleMove}
         isMyTurn={gameMode === 'local' || myPlayer === gameState.currentPlayer}
+        currentPlayer={gameState.currentPlayer}
       />
       
       <button className="button" onClick={handleReset}>
         New Game
       </button>
       <button className="button" onClick={handleBackToMenu}>
-        Back to Lobby
+        Back to Menu
       </button>
       
-      <Rules />
+      <Rules currentPlayer={gameState.currentPlayer} />
       
       {gameState.gameOver && (
         <div className={`game-over ${gameState.gameWinner.toLowerCase()}`}>
           {gameState.gameWinner === 'tie' 
-            ? 'Game Tied!' 
+            ? 'Draw!' 
             : `Player ${gameState.gameWinner} Wins!`}
         </div>
       )}

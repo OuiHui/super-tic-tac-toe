@@ -1,9 +1,17 @@
 import Cell from './Cell'
 
-function SmallBoard({ boardIndex, board, isActive, winner, onCellClick, isMyTurn }) {
+function SmallBoard({ boardIndex, board, isActive, winner, onCellClick, isMyTurn, currentPlayer }) {
   const boardClasses = ['small-board']
-  if (isActive) boardClasses.push('active')
-  if (winner) boardClasses.push('won')
+  if (isActive) {
+    boardClasses.push('active')
+    boardClasses.push(`active-${currentPlayer.toLowerCase()}`)
+  }
+  if (winner) {
+    boardClasses.push('won')
+    if (winner === 'X') boardClasses.push('x-winner')
+    else if (winner === 'O') boardClasses.push('o-winner')
+    else if (winner === 'tie') boardClasses.push('tie-winner')
+  }
 
   return (
     <div className={boardClasses.join(' ')}>
@@ -14,6 +22,7 @@ function SmallBoard({ boardIndex, board, isActive, winner, onCellClick, isMyTurn
             value={cell}
             onClick={() => onCellClick(boardIndex, cellIndex)}
             disabled={!isActive || winner || cell || !isMyTurn}
+            currentPlayer={currentPlayer}
           />
         ))}
       </div>

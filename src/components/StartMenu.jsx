@@ -65,26 +65,27 @@ function StartMenu({ onGameModeSelect, onGameCodeSet }) {
 
   return (
     <div className="start-menu">
-      <h2>Welcome to Super Tic-Tac-Toe!</h2>
-      <button onClick={handleLocalGame}>Local Single Player</button>
-      <button onClick={handleOnlineMultiplayer}>Online Multiplayer</button>
+      <h2 data-text="SUPER TIC-TAC-TOE">Super Tic-Tac-Toe</h2>
+      <p className="subtitle">Made by Huy Nguyen</p>
+      <button onClick={handleLocalGame}>Solo Mode</button>
+      <button onClick={handleOnlineMultiplayer}>Online Battle</button>
       
       {showOnlineOptions && (
         <div className="online-options">
           <input
             type="text"
             className="display-name-input"
-            placeholder="Enter your display name"
+            placeholder="Enter display name"
             maxLength="20"
             value={displayName}
             onChange={(e) => setDisplayName(e.target.value)}
           />
-          <button onClick={handleCreateGame}>Create Game</button>
-          <div style={{ margin: '0.5em 0' }}>or</div>
+          <button onClick={handleCreateGame}>Create Room</button>
+          <div style={{ margin: '0.5em 0', color: '#888' }}>or</div>
           <input
             type="text"
             className="join-code-input"
-            placeholder="Enter Game Code"
+            placeholder="Room Code"
             maxLength="8"
             value={joinCode}
             onChange={(e) => {
@@ -92,11 +93,12 @@ function StartMenu({ onGameModeSelect, onGameCodeSet }) {
               setJoinError('')
             }}
           />
-          <button onClick={handleJoinGame}>Join Game</button>
+          <button onClick={handleJoinGame}>Join Room</button>
           {joinError && <div className="join-error">{joinError}</div>}
           {createdGameCode && (
             <div className="game-code-box">
-              Game Code: {createdGameCode}
+              Room Code: <span className="code-highlight">{createdGameCode}</span>
+              <div className="code-instruction">Share this code to invite players</div>
             </div>
           )}
         </div>

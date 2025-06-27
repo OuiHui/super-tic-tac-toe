@@ -1,6 +1,7 @@
-function Cell({ value, onClick, disabled }) {
+function Cell({ value, onClick, disabled, currentPlayer }) {
   const cellClasses = ['cell']
   if (value) cellClasses.push(value.toLowerCase())
+  if (currentPlayer) cellClasses.push(`current-${currentPlayer.toLowerCase()}`)
 
   return (
     <button

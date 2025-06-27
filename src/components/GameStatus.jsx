@@ -1,30 +1,31 @@
 function GameStatus({ gameState, myPlayer }) {
   return (
     <div className="game-status">
-      <div className="current-player">
-        Current Player: 
+      <div className={`current-player ${gameState.currentPlayer.toLowerCase()}-player`}>
+        <span className="current-player-label">Current Player:</span>
         <span 
-          className={gameState.currentPlayer.toLowerCase()}
+          className={`player-symbol ${gameState.currentPlayer.toLowerCase()}`}
           style={{ 
-            color: gameState.currentPlayer === 'X' ? '#2196F3' : '#f44336',
-            marginLeft: '8px'
+            color: gameState.currentPlayer === 'X' ? '#ff3250' : '#00c8ff',
+            marginLeft: '8px',
+            fontWeight: 'bold'
           }}
         >
           {gameState.currentPlayer}
         </span>
         {myPlayer && (
-          <span style={{ marginLeft: '16px', fontSize: '0.9em', color: '#666' }}>
+          <span style={{ marginLeft: '16px', fontSize: '0.9em', color: '#aaa' }}>
             (You are {myPlayer})
           </span>
         )}
       </div>
       
-      <div className="game-instruction">
+      <div className={`game-instruction ${gameState.currentPlayer.toLowerCase()}-theme`}>
         {gameState.gameOver 
-          ? 'Game Over!' 
+          ? 'Game Complete!' 
           : gameState.activeBoard === null 
-            ? 'Play anywhere!' 
-            : `Play in board ${gameState.activeBoard + 1}`}
+            ? 'Play anywhere' 
+            : `Target grid ${gameState.activeBoard + 1}`}
       </div>
     </div>
   )

@@ -8,7 +8,8 @@ const initialGameState = {
   gameWinner: '',
   gameOver: false,
   playerXTime: 500,
-  playerOTime: 500
+  playerOTime: 500,
+  gameStarted: false
 }
 
 export function useSuperTicTacToe(isLocalGame = true) {
@@ -16,7 +17,7 @@ export function useSuperTicTacToe(isLocalGame = true) {
   const timerRef = useRef(null)
 
   useEffect(() => {
-    if (isLocalGame && !gameState.gameOver) {
+    if (isLocalGame && !gameState.gameOver && gameState.gameStarted) {
       startTimer()
     }
     
@@ -25,7 +26,7 @@ export function useSuperTicTacToe(isLocalGame = true) {
         clearInterval(timerRef.current)
       }
     }
-  }, [gameState.currentPlayer, gameState.gameOver, isLocalGame])
+  }, [gameState.currentPlayer, gameState.gameOver, gameState.gameStarted, isLocalGame])
 
   const startTimer = () => {
     if (timerRef.current) clearInterval(timerRef.current)
@@ -86,6 +87,7 @@ export function useSuperTicTacToe(isLocalGame = true) {
 
     const newState = {
       ...gameState,
+      gameStarted: true, // Start the game on first move
       boards: gameState.boards.map((board, idx) => 
         idx === boardIndex 
           ? board.map((cell, cellIdx) => 

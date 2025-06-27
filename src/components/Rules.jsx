@@ -1,13 +1,13 @@
-function Rules() {
+function Rules({ currentPlayer }) {
   return (
-    <div className="rules">
-      <h3>How to Play:</h3>
+    <div className={`rules ${currentPlayer?.toLowerCase()}-theme`}>
+      <h3 className={`rules-title ${currentPlayer?.toLowerCase()}-glow`}>How to Play:</h3>
       <ul>
-        <li>Win small boards by getting 3 in a row within each 3×3 grid</li>
-        <li>Your move determines which board your opponent must play in next</li>
-        <li>If the target board is full or already won, opponent can play anywhere</li>
-        <li>Win the game by getting 3 small boards in a row!</li>
-        <li>Green highlight shows where you can currently play</li>
+        <li>Win small grids by getting 3 in a row within each section</li>
+        <li>Your move determines which grid your opponent plays in next</li>
+        <li>If target grid is won or full, play anywhere available</li>
+        <li>Win by getting 3 small grids in a row</li>
+        <li>Blue glow shows your active playing area</li>
       </ul>
     </div>
   )

@@ -1,8 +1,8 @@
 import SmallBoard from './SmallBoard'
 
-function SuperBoard({ gameState, onCellClick, isMyTurn }) {
+function SuperBoard({ gameState, onCellClick, isMyTurn, currentPlayer }) {
   return (
-    <div className="super-board">
+    <div className={`super-board ${gameState.currentPlayer.toLowerCase()}-turn`}>
       {gameState.boards.map((board, boardIndex) => (
         <SmallBoard
           key={boardIndex}
@@ -16,6 +16,7 @@ function SuperBoard({ gameState, onCellClick, isMyTurn }) {
           winner={gameState.wonBoards[boardIndex]}
           onCellClick={onCellClick}
           isMyTurn={isMyTurn}
+          currentPlayer={currentPlayer}
         />
       ))}
     </div>
