@@ -99,8 +99,20 @@ function GameContainer({ gameMode, gameCode, onBackToMenu }) {
   }
 
   return (
-    <div className={`game-container ${gameState.currentPlayer.toLowerCase()}-turn`}>
-      <h1 data-text="SUPER TIC-TAC-TOE" className={`game-title ${gameState.currentPlayer.toLowerCase()}-glow`}>SUPER TIC-TAC-TOE</h1>
+    <div className={`game-container ${
+      gameState.gameOver && gameState.gameWinner !== 'tie' 
+        ? `${gameState.gameWinner.toLowerCase()}-winner` 
+        : gameState.gameOver && gameState.gameWinner === 'tie'
+        ? 'tie-winner'
+        : `${gameState.currentPlayer.toLowerCase()}-turn`
+    }`}>
+      <h1 data-text="SUPER TIC-TAC-TOE" className={`game-title ${
+        gameState.gameOver && gameState.gameWinner !== 'tie'
+          ? `${gameState.gameWinner.toLowerCase()}-glow`
+          : gameState.gameOver && gameState.gameWinner === 'tie'
+          ? ''
+          : `${gameState.currentPlayer.toLowerCase()}-glow`
+      }`}>SUPER TIC-TAC-TOE</h1>
       
       <GameStatus 
         gameState={gameState} 
@@ -111,6 +123,7 @@ function GameContainer({ gameMode, gameCode, onBackToMenu }) {
         playerXTime={gameState.playerXTime}
         playerOTime={gameState.playerOTime}
         currentPlayer={gameState.currentPlayer}
+        gameState={gameState}
       />
       
       <SuperBoard
@@ -127,7 +140,7 @@ function GameContainer({ gameMode, gameCode, onBackToMenu }) {
         Back to Menu
       </button>
       
-      <Rules currentPlayer={gameState.currentPlayer} />
+      <Rules gameState={gameState} />
       
       {gameState.gameOver && (
         <div className={`game-over ${gameState.gameWinner.toLowerCase()}`}>

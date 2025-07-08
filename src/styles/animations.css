@@ -576,3 +576,67 @@
       rgba(255, 50, 80, 0.3));
   }
 }
+
+/* Winner Container Animations */
+@keyframes winnerPulse {
+  0% { 
+    transform: scale(1);
+    filter: brightness(1) saturate(1);
+  }
+  50% {
+    transform: scale(1.02);
+    filter: brightness(1.15) saturate(1.3);
+  }
+  100% { 
+    transform: scale(1);
+    filter: brightness(1) saturate(1);
+  }
+}
+
+@keyframes tieWinnerPulse {
+  0% { 
+    transform: scale(1);
+    filter: brightness(1) saturate(0.8);
+  }
+  50% {
+    transform: scale(1.01);
+    filter: brightness(1.1) saturate(1);
+  }
+  100% { 
+    transform: scale(1);
+    filter: brightness(1) saturate(0.8);
+  }
+}
+
+@keyframes winnerBorderGlow {
+  0% { 
+    opacity: 0.8;
+    filter: blur(15px);
+  }
+  100% { 
+    opacity: 1;
+    filter: blur(20px);
+  }
+}
+
+@keyframes tieBorderGlow {
+  0% { 
+    opacity: 0.6;
+    filter: blur(12px);
+  }
+  100% { 
+    opacity: 0.9;
+    filter: blur(18px);
+  }
+}
+
+@keyframes winnerStatusGlow {
+  0% { 
+    filter: brightness(1) saturate(1);
+    text-shadow: 0 0 15px currentColor;
+  }
+  100% { 
+    filter: brightness(1.2) saturate(1.4);
+    text-shadow: 0 0 25px currentColor, 0 0 40px currentColor;
+  }
+}

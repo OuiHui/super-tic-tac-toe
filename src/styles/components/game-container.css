@@ -3,17 +3,17 @@
 .game-container {
   background: rgba(5, 5, 15, 0.98);
   border: 3px solid rgba(0, 200, 255, 0.6);
-  border-radius: 25px;
+  border-radius: 20px;
   box-shadow: 
-    0 0 80px rgba(0, 200, 255, 0.5),
-    0 0 160px rgba(0, 200, 255, 0.3),
-    0 0 240px rgba(255, 50, 80, 0.2),
-    inset 0 0 60px rgba(0, 200, 255, 0.08),
-    0 30px 100px rgba(0, 0, 0, 0.9);
-  padding: 2.5rem;
+    0 0 60px rgba(0, 200, 255, 0.5),
+    0 0 120px rgba(0, 200, 255, 0.3),
+    0 0 180px rgba(255, 50, 80, 0.2),
+    inset 0 0 40px rgba(0, 200, 255, 0.08),
+    0 20px 60px rgba(0, 0, 0, 0.9);
+  padding: 1.5rem;
   text-align: center;
-  max-width: 1050px;
-  margin: 0 auto;
+  max-width: 800px;
+  margin: 1rem auto;
   backdrop-filter: blur(25px);
   position: relative;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -22,21 +22,54 @@
 .game-container.x-turn {
   border-color: rgba(255, 50, 80, 0.8);
   box-shadow: 
-    0 0 80px rgba(255, 50, 80, 0.6),
-    0 0 160px rgba(255, 50, 80, 0.4),
-    0 0 240px rgba(255, 50, 80, 0.25),
-    inset 0 0 60px rgba(255, 50, 80, 0.1),
-    0 30px 100px rgba(0, 0, 0, 0.9);
+    0 0 60px rgba(255, 50, 80, 0.6),
+    0 0 120px rgba(255, 50, 80, 0.4),
+    0 0 180px rgba(255, 50, 80, 0.25),
+    inset 0 0 40px rgba(255, 50, 80, 0.1),
+    0 20px 60px rgba(0, 0, 0, 0.9);
 }
 
 .game-container.o-turn {
   border-color: rgba(0, 200, 255, 0.8);
   box-shadow: 
-    0 0 80px rgba(0, 200, 255, 0.6),
-    0 0 160px rgba(0, 200, 255, 0.4),
-    0 0 240px rgba(0, 200, 255, 0.25),
-    inset 0 0 60px rgba(0, 200, 255, 0.1),
-    0 30px 100px rgba(0, 0, 0, 0.9);
+    0 0 60px rgba(0, 200, 255, 0.6),
+    0 0 120px rgba(0, 200, 255, 0.4),
+    0 0 180px rgba(0, 200, 255, 0.25),
+    inset 0 0 40px rgba(0, 200, 255, 0.1),
+    0 20px 60px rgba(0, 0, 0, 0.9);
+}
+
+.game-container.x-winner {
+  border-color: rgba(255, 50, 80, 1);
+  background: rgba(5, 5, 15, 0.98);
+  box-shadow: 
+    0 0 100px rgba(255, 50, 80, 0.8),
+    0 0 200px rgba(255, 50, 80, 0.6),
+    0 0 300px rgba(255, 50, 80, 0.4),
+    0 30px 80px rgba(0, 0, 0, 0.9);
+  animation: winnerPulse 3s ease-in-out infinite alternate;
+}
+
+.game-container.o-winner {
+  border-color: rgba(0, 200, 255, 1);
+  background: rgba(5, 5, 15, 0.98);
+  box-shadow: 
+    0 0 100px rgba(0, 200, 255, 0.8),
+    0 0 200px rgba(0, 200, 255, 0.6),
+    0 0 300px rgba(0, 200, 255, 0.4),
+    0 30px 80px rgba(0, 0, 0, 0.9);
+  animation: winnerPulse 3s ease-in-out infinite alternate;
+}
+
+.game-container.tie-winner {
+  border-color: rgba(150, 150, 150, 0.8);
+  background: rgba(5, 5, 15, 0.98);
+  box-shadow: 
+    0 0 80px rgba(150, 150, 150, 0.6),
+    0 0 160px rgba(150, 150, 150, 0.4),
+    0 0 240px rgba(150, 150, 150, 0.2),
+    0 30px 80px rgba(0, 0, 0, 0.9);
+  animation: tieWinnerPulse 4s ease-in-out infinite alternate;
 }
 
 .game-container::before {
@@ -46,7 +79,7 @@
   left: -3px;
   right: -3px;
   bottom: -3px;
-  border-radius: 25px;
+  border-radius: 20px;
   z-index: -1;
   animation: borderGlow 4s ease-in-out infinite alternate;
   transition: all 0.3s ease;
@@ -55,13 +88,37 @@
 .game-container::after {
   content: '';
   position: absolute;
-  top: -8px;
-  left: -8px;
-  right: -8px;
-  bottom: -8px;
-  border-radius: 30px;
+  top: -6px;
+  left: -6px;
+  right: -6px;
+  bottom: -6px;
+  border-radius: 25px;
   z-index: -2;
-  filter: blur(20px);
+  filter: blur(15px);
   animation: borderGlow 4s ease-in-out infinite alternate reverse;
   transition: all 0.3s ease;
+}
+
+.game-container.x-winner::before {
+  animation: winnerBorderGlow 2s ease-in-out infinite alternate;
+}
+
+.game-container.x-winner::after {
+  animation: winnerBorderGlow 2s ease-in-out infinite alternate reverse;
+}
+
+.game-container.o-winner::before {
+  animation: winnerBorderGlow 2s ease-in-out infinite alternate;
+}
+
+.game-container.o-winner::after {
+  animation: winnerBorderGlow 2s ease-in-out infinite alternate reverse;
+}
+
+.game-container.tie-winner::before {
+  animation: tieBorderGlow 3s ease-in-out infinite alternate;
+}
+
+.game-container.tie-winner::after {
+  animation: tieBorderGlow 3s ease-in-out infinite alternate reverse;
 }

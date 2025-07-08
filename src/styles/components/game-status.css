@@ -109,3 +109,49 @@
     0 0 10px rgba(0, 200, 255, 0.6),
     0 0 20px rgba(0, 200, 255, 0.3);
 }
+
+/* Winner Status Styles */
+.current-player.winner {
+  font-size: 1.8rem;
+  padding: 16px 24px;
+  border-width: 3px;
+  animation: winnerStatusGlow 2s ease-in-out infinite alternate;
+  transform: scale(1.1);
+}
+
+.current-player.winner .current-player-label {
+  color: #fff;
+  text-shadow: none;
+}
+
+.current-player.winner::before {
+  animation: none;
+  opacity: 0.8;
+}
+
+.current-player.winner.x-winner {
+  border-color: rgba(255, 50, 80, 1);
+  background: rgba(40, 5, 10, 0.95);
+  box-shadow: 
+    0 0 50px rgba(255, 50, 80, 0.8),
+    0 0 100px rgba(255, 50, 80, 0.6),
+    inset 0 0 40px rgba(255, 50, 80, 0.2);
+}
+
+.current-player.winner.o-winner {
+  border-color: rgba(0, 200, 255, 1);
+  background: rgba(5, 20, 40, 0.95);
+  box-shadow: 
+    0 0 50px rgba(0, 200, 255, 0.8),
+    0 0 100px rgba(0, 200, 255, 0.6),
+    inset 0 0 40px rgba(0, 200, 255, 0.2);
+}
+
+.current-player.winner.tie-winner {
+  border-color: rgba(150, 150, 150, 0.8);
+  background: rgba(20, 20, 20, 0.95);
+  box-shadow: 
+    0 0 40px rgba(150, 150, 150, 0.6),
+    0 0 80px rgba(150, 150, 150, 0.4),
+    inset 0 0 30px rgba(150, 150, 150, 0.15);
+}

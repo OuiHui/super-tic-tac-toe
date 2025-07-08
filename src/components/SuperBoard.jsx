@@ -1,8 +1,19 @@
 import SmallBoard from './SmallBoard'
 
 function SuperBoard({ gameState, onCellClick, isMyTurn, currentPlayer }) {
+  const getSuperBoardClass = () => {
+    if (gameState.gameOver) {
+      if (gameState.gameWinner === 'tie') {
+        return 'super-board tie-winner'
+      } else {
+        return `super-board ${gameState.gameWinner.toLowerCase()}-winner`
+      }
+    }
+    return `super-board ${gameState.currentPlayer.toLowerCase()}-turn`
+  }
+
   return (
-    <div className={`super-board ${gameState.currentPlayer.toLowerCase()}-turn`}>
+    <div className={getSuperBoardClass()}>
       {gameState.boards.map((board, boardIndex) => (
         <SmallBoard
           key={boardIndex}
