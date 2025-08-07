@@ -8,7 +8,6 @@ A modern React implementation of Super Tic-Tac-Toe with Firebase real-time multi
 - **Online Multiplayer**: Real-time multiplayer using Firebase
 - **Real-time Sync**: Game state synchronizes across all players instantly
 - **Timer System**: Each player has a countdown timer
-- **Modern UI**: Clean, responsive React interface
 
 ## Getting Started
 
@@ -29,19 +28,7 @@ npm install
 npm run dev
 ```
 
-3. Open your browser and navigate to the URL shown in the terminal (usually `http://localhost:5173`)
 
-### Building for Production
-
-```bash
-npm run build
-```
-
-### Running the Production Build
-
-```bash
-npm run preview
-```
 
 ## How to Play
 
@@ -66,14 +53,6 @@ npm run preview
 - If the target board is full or already won, opponent can play anywhere
 - Win the game by getting 3 small boards in a row!
 - Green highlight shows where you can currently play
-
-## Technologies Used
-
-- **React 18** - Modern React with hooks
-- **Vite** - Fast build tool and dev server
-- **Firebase** - Real-time database for multiplayer
-- **CSS3** - Modern styling with gradients and animations
-
 
 
 
