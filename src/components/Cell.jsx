@@ -1,3 +1,5 @@
+import React from 'react'
+
 function Cell({ value, onClick, disabled, currentPlayer }) {
   const cellClasses = ['cell']
   if (value) cellClasses.push(value.toLowerCase())
@@ -14,4 +16,9 @@ function Cell({ value, onClick, disabled, currentPlayer }) {
   )
 }
 
-export default Cell
+export default React.memo(Cell, (prev, next) => (
+  prev.value === next.value &&
+  prev.disabled === next.disabled &&
+  prev.currentPlayer === next.currentPlayer &&
+  prev.onClick === next.onClick
+))

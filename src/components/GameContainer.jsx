@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense, lazy } from 'react'
 import SuperBoard from './SuperBoard'
 import GameStatus from './GameStatus'
 import Timer from './Timer'
-import Rules from './Rules'
+const RulesLazy = lazy(() => import('./Rules'))
 import { useFirebase } from '../contexts/FirebaseContext'
 import { useSuperTicTacToe } from '../hooks/useSuperTicTacToe'
 
@@ -140,7 +140,9 @@ function GameContainer({ gameMode, gameCode, onBackToMenu }) {
         Back to Menu
       </button>
       
-      <Rules gameState={gameState} />
+      <Suspense fallback={null}>
+        <RulesLazy gameState={gameState} />
+      </Suspense>
       
       {gameState.gameOver && (
         <div className={`game-over ${gameState.gameWinner.toLowerCase()}`}>

@@ -39,3 +39,14 @@ body {
   margin: 0 auto;
   padding: 20px;
 }
+
+/* Screen transition */
+.App.fade-out { opacity: 0; transition: opacity 250ms ease; }
+.App.fade-in { opacity: 1; transition: opacity 250ms ease; }
+
+@media (prefers-reduced-motion: reduce) {
+  .App.fade-out, .App.fade-in { transition: none; }
+}
+
+body.perf-low .App.fade-out,
+body.perf-low .App.fade-in { transition: none; }

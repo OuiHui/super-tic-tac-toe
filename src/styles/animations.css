@@ -640,3 +640,40 @@
     text-shadow: 0 0 25px currentColor, 0 0 40px currentColor;
   }
 }
+
+/* Reduced Motion and Performance Mode Overrides */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}
+
+/* Perf-low mode: lower intensity and disable large blurs/scales */
+body.perf-low {
+  /* Disable non-essential animations */
+  --pulse-scale: 1.0;
+}
+
+body.perf-low .game-container,
+body.perf-low .super-board,
+body.perf-low .small-board,
+body.perf-low .cell,
+body.perf-low .timer,
+body.perf-low .game-title,
+body.perf-low .rules,
+body.perf-low .button {
+  animation: none !important;
+}
+
+body.perf-low .cell,
+body.perf-low .small-board,
+body.perf-low .super-board,
+body.perf-low .game-container {
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.2) !important;
+  filter: none !important;
+}
+
+body.perf-low .game-title,
+body.perf-low .rules-title,
+body.perf-low .timer .time-value,
+body.perf-low .timer .time-label {
+  text-shadow: none !important;
+}

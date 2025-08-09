@@ -1,3 +1,4 @@
+import React, { useMemo } from 'react'
 import SmallBoard from './SmallBoard'
 
 function SuperBoard({ gameState, onCellClick, isMyTurn, currentPlayer }) {
@@ -12,8 +13,13 @@ function SuperBoard({ gameState, onCellClick, isMyTurn, currentPlayer }) {
     return `super-board ${gameState.currentPlayer.toLowerCase()}-turn`
   }
 
+  const containerClass = useMemo(
+    () => getSuperBoardClass(),
+    [gameState.gameOver, gameState.gameWinner, gameState.currentPlayer]
+  )
+
   return (
-    <div className={getSuperBoardClass()}>
+    <div className={containerClass}>
       {gameState.boards.map((board, boardIndex) => (
         <SmallBoard
           key={boardIndex}
@@ -34,4 +40,4 @@ function SuperBoard({ gameState, onCellClick, isMyTurn, currentPlayer }) {
   )
 }
 
-export default SuperBoard
+export default React.memo(SuperBoard)

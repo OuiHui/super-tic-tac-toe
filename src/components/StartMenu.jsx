@@ -19,6 +19,9 @@ function StartMenu({ onGameModeSelect, onGameCodeSet }) {
 
   const handleCreateGame = async () => {
     if (!database) return
+    if (displayName.trim()) {
+      localStorage.setItem('displayName', displayName.trim())
+    }
     
     const code = Math.random().toString(36).substr(2, 6).toUpperCase()
     const gameRef = ref(database, 'games/' + code + '/state')
@@ -45,6 +48,9 @@ function StartMenu({ onGameModeSelect, onGameCodeSet }) {
 
   const handleJoinGame = async () => {
     if (!database || !joinCode.trim()) return
+    if (displayName.trim()) {
+      localStorage.setItem('displayName', displayName.trim())
+    }
     
     const code = joinCode.trim().toUpperCase()
     const gameRef = ref(database, 'games/' + code + '/state')
@@ -65,10 +71,13 @@ function StartMenu({ onGameModeSelect, onGameCodeSet }) {
 
   return (
     <div className="start-menu">
-      <h2 data-text="SUPER TIC-TAC-TOE">Super Tic-Tac-Toe</h2>
+      <h2 className="menu-title">
+        <span className="menu-title-line menu-title-super">Super</span>
+        <span className="menu-title-line menu-title-ttt">Tic-Tac-Toe</span>
+      </h2>
       <p className="subtitle">Made by Huy Nguyen</p>
-      <button onClick={handleLocalGame}>Solo Mode</button>
-      <button onClick={handleOnlineMultiplayer}>Online Battle</button>
+  <button onClick={handleLocalGame}>Local Play</button>
+  <button onClick={handleOnlineMultiplayer}>Online Multiplayer</button>
       
       {showOnlineOptions && (
         <div className="online-options">

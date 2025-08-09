@@ -1,17 +1,25 @@
+import React, { useCallback, useMemo } from 'react'
 import Cell from './Cell'
 
 function SmallBoard({ boardIndex, board, isActive, winner, onCellClick, isMyTurn, currentPlayer }) {
-  const boardClasses = ['small-board']
-  if (isActive) {
-    boardClasses.push('active')
-    boardClasses.push(`active-${currentPlayer.toLowerCase()}`)
-  }
-  if (winner) {
-    boardClasses.push('won')
-    if (winner === 'X') boardClasses.push('x-winner')
-    else if (winner === 'O') boardClasses.push('o-winner')
-    else if (winner === 'tie') boardClasses.push('tie-winner')
-  }
+  const boardClasses = useMemo(() => {
+    const classes = ['small-board']
+    if (isActive) {
+      classes.push('active')
+      classes.push(`active-${currentPlayer.toLowerCase()}`)
+    }
+    if (winner) {
+      classes.push('won')
+      if (winner === 'X') classes.push('x-winner')
+      else if (winner === 'O') classes.push('o-winner')
+      else if (winner === 'tie') classes.push('tie-winner')
+    }
+    return classes
+  }, [isActive, winner, currentPlayer])
+
+  const handleClick = useCallback((cellIndex) => {
+    onCellClick(boardIndex, cellIndex)
+  }, [onCellClick, boardIndex])
 
   return (
     <div className={boardClasses.join(' ')}>
@@ -20,7 +28,7 @@ function SmallBoard({ boardIndex, board, isActive, winner, onCellClick, isMyTurn
           <Cell
             key={cellIndex}
             value={cell}
-            onClick={() => onCellClick(boardIndex, cellIndex)}
+            onClick={() => handleClick(cellIndex)}
             disabled={!isActive || winner || cell || !isMyTurn}
             currentPlayer={currentPlayer}
           />
@@ -36,4 +44,4 @@ function SmallBoard({ boardIndex, board, isActive, winner, onCellClick, isMyTurn
   )
 }
 
-export default SmallBoard
+export default React.memo(SmallBoard)

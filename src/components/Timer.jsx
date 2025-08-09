@@ -1,29 +1,28 @@
-function Timer({ playerXTime, playerOTime, currentPlayer, gameState }) {
-  const getTimerClass = (player) => {
-    let classes = ['timer']
-    
-    // If game is over, don't show active/colored states
-    if (gameState?.gameOver) {
-      return classes.join(' ')
-    }
-    
-    // Normal gameplay coloring
-    if (currentPlayer === player) {
-      classes.push('active', `player-${player.toLowerCase()}`)
-    }
-    
-    return classes.join(' ')
-  }
+import { useSyncExternalStore, useMemo } from 'react'
+import { subscribe, getSnapshot } from '../stores/timerStore'
+
+function Timer({ currentPlayer, gameState }) {
+  const { x, o } = useSyncExternalStore(subscribe, getSnapshot, getSnapshot)
+
+  const clsX = useMemo(() => {
+    if (gameState?.gameOver) return 'timer'
+    return `timer ${currentPlayer === 'X' ? 'active player-x' : ''}`
+  }, [currentPlayer, gameState?.gameOver])
+
+  const clsO = useMemo(() => {
+    if (gameState?.gameOver) return 'timer'
+    return `timer ${currentPlayer === 'O' ? 'active player-o' : ''}`
+  }, [currentPlayer, gameState?.gameOver])
 
   return (
     <div className="timers">
-      <div className={getTimerClass('X')}>
+      <div className={clsX}>
         <span className="timer-label">PLAYER X</span>
-        <span className="timer-value">{playerXTime}</span>
+        <span className="timer-value">{x}</span>
       </div>
-      <div className={getTimerClass('O')}>
+      <div className={clsO}>
         <span className="timer-label">PLAYER O</span>
-        <span className="timer-value">{playerOTime}</span>
+        <span className="timer-value">{o}</span>
       </div>
     </div>
   )

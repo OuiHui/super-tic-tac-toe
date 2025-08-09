@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { initTimers, startTicking, stopTicking } from '../stores/timerStore'
 
 const initialGameState = {
   boards: Array(9).fill(null).map(() => Array(9).fill('')),
@@ -17,46 +18,37 @@ export function useSuperTicTacToe(isLocalGame = true) {
   const timerRef = useRef(null)
 
   useEffect(() => {
-    if (isLocalGame && !gameState.gameOver && gameState.gameStarted) {
-      startTimer()
+    // Initialize external timers once
+    initTimers(initialGameState.playerXTime, initialGameState.playerOTime)
+  }, [])
+
+  useEffect(() => {
+    if (!isLocalGame) return
+    if (!gameState.gameStarted || gameState.gameOver) {
+      stopTicking()
+      return
     }
-    
-    return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current)
+
+    // Start ticking against external store; notify on timeout
+    startTicking(
+      () => gameState.currentPlayer,
+      () => gameState.gameOver,
+      (timedOutPlayer) => {
+        // Timed out: other player wins
+        setGameState(prev => ({
+          ...prev,
+          gameOver: true,
+          gameWinner: timedOutPlayer === 'X' ? 'O' : 'X',
+          activeBoard: null
+        }))
+        stopTicking()
       }
+    )
+
+    return () => {
+      stopTicking()
     }
-  }, [gameState.currentPlayer, gameState.gameOver, gameState.gameStarted, isLocalGame])
-
-  const startTimer = () => {
-    if (timerRef.current) clearInterval(timerRef.current)
-    
-    timerRef.current = setInterval(() => {
-      setGameState(prevState => {
-        if (prevState.gameOver) {
-          clearInterval(timerRef.current)
-          return prevState
-        }
-
-        const newState = { ...prevState }
-        
-        if (newState.currentPlayer === 'X') {
-          newState.playerXTime--
-        } else {
-          newState.playerOTime--
-        }
-
-        // Check for time out
-        if (newState.playerXTime <= 0 || newState.playerOTime <= 0) {
-          newState.gameOver = true
-          newState.gameWinner = newState.currentPlayer === 'X' ? 'O' : 'X'
-          clearInterval(timerRef.current)
-        }
-
-        return newState
-      })
-    }, 1000)
-  }
+  }, [isLocalGame, gameState.currentPlayer, gameState.gameOver, gameState.gameStarted])
 
   const checkWin = (board) => {
     const winPatterns = [
@@ -113,10 +105,12 @@ export function useSuperTicTacToe(isLocalGame = true) {
       newState.gameWinner = overallWinner
       newState.gameOver = true
       newState.activeBoard = null
+      stopTicking()
     } else if (newState.wonBoards.every(r => r !== '')) {
       newState.gameWinner = 'tie'
       newState.gameOver = true
       newState.activeBoard = null
+      stopTicking()
     } else {
       // Determine next active board
       const nextBoardIndex = cellIndex
@@ -135,12 +129,11 @@ export function useSuperTicTacToe(isLocalGame = true) {
   }
 
   const resetGame = () => {
-    if (timerRef.current) {
-      clearInterval(timerRef.current)
-    }
-    
+    stopTicking()
     const newState = { ...initialGameState }
     setGameState(newState)
+    // Re-init external timers
+    initTimers(initialGameState.playerXTime, initialGameState.playerOTime)
     return newState
   }
 
