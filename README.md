@@ -1,6 +1,6 @@
 # Super Tic-Tac-Toe React
 
-A modern React implementation of Super Tic-Tac-Toe with Firebase real-time multiplayer support.
+A React implementation of Super Tic-Tac-Toe (Firebase real-time multiplayer support in progress)
 
 ## Features
 
