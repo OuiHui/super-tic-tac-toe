@@ -10,12 +10,9 @@ function App() {
   const [appClass, setAppClass] = useState('')
 
   const navigateTo = (targetMode) => {
-    // fade out current screen
     setAppClass('fade-out')
     window.setTimeout(() => {
-      // switch view
       setGameMode(targetMode)
-      // fade in new screen
       setAppClass('fade-in')
       window.setTimeout(() => setAppClass(''), 260)
     }, 260)
