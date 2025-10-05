@@ -2,6 +2,8 @@
 
 A React implementation of Super Tic-Tac-Toe (Firebase real-time multiplayer support in progress)
 
+Test it out: [https://ouihui.github.io/super-tic-tac-toe/](https://ouihui.github.io/super-tic-tac-toe/)
+
 ## Getting Started
 
 ### Prerequisites
